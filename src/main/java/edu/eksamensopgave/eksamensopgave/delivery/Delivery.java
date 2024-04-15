@@ -1,11 +1,15 @@
 package edu.eksamensopgave.eksamensopgave.delivery;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.eksamensopgave.eksamensopgave.product.Product;
 import edu.eksamensopgave.eksamensopgave.productOrder.ProductOrder;
 import jakarta.persistence.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "deliveries")
@@ -13,13 +17,12 @@ public class Delivery {
     // ------- Fields -------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private int deliveryId;
     private Date deliveryDate;
     private String fromWareHouse;
     private String destination;
 
-    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ProductOrder> productOrders;
 
     // ------- Constructors -------
@@ -33,6 +36,21 @@ public class Delivery {
     }
 
     public Delivery(int deliveryId, Date deliveryDate, String destination, String fromWareHouse) {
+        this.deliveryId = deliveryId;
+        this.deliveryDate = deliveryDate;
+        this.destination = destination;
+        this.fromWareHouse = fromWareHouse;
+    }
+
+    public Delivery(String deliveryDateString, String fromWareHouse, String destination) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.deliveryDate = formatter.parse(deliveryDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.fromWareHouse = fromWareHouse;
+        this.destination = destination;
     }
 
 
@@ -66,4 +84,15 @@ public class Delivery {
     }
 
 
+    public void setProductOrders(List<ProductOrder> productOrders) {
+        this.productOrders = productOrders;
+    }
+
+    public void addProductOrder(ProductOrder productOrder) {
+        productOrders.add(productOrder);
+    }
+
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
+    }
 }

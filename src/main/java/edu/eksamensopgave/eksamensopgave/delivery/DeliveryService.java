@@ -16,15 +16,15 @@ public class DeliveryService {
 
     public List<DeliveryDTO> getDeliveries() {
         return deliveryRepository.findAll().stream()
-                .map(delivery -> new DeliveryDTO(delivery.getDeliveryId(), delivery.getDeliveryDate(), delivery.getFromWareHouse(), delivery.getDestination()))
+                .map(delivery -> new DeliveryDTO(delivery.getDeliveryId(), delivery.getDeliveryDate(), delivery.getFromWareHouse(), delivery.getDestination(), delivery.getProductOrders()))
                 .collect(Collectors.toList());
     }
     public Delivery getDelivery(int id) {
-        return deliveryRepository.findById(id).orElse(null);
+        return deliveryRepository.findByDeliveryId(id);
     }
 
     public Delivery addDelivery(DeliveryDTO deliveryDTO) {
-        Delivery delivery = new Delivery(deliveryDTO.deliveryDate(), deliveryDTO.deliveryTime(), deliveryDTO.deliveryAddress());
+        Delivery delivery = new Delivery(deliveryDTO.deliveryDate(), deliveryDTO.fromWareHouse(), deliveryDTO.destination());
         deliveryRepository.save(delivery);
         return delivery;
     }

@@ -28,9 +28,8 @@ public class ProductService {
         return product;
     }
 
-    public List<ProductDTO> getProductByName(String productName) {
-        return productRepository.findAllByProductName(productName).stream()
-                .map(product -> new ProductDTO(product.getProductId(), product.getProductName(), product.getPrice(), product.getWeight()))
-                .collect(Collectors.toList());
+    public ProductDTO getProductByName(String productName) {
+       Product foundProduct = productRepository.findByProductNameIgnoreCase(productName);
+         return new ProductDTO(foundProduct.getProductId(), foundProduct.getProductName(), foundProduct.getPrice(), foundProduct.getWeight());
     }
 }

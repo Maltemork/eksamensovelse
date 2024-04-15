@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productName}")
-    public List<ProductDTO> getProductByName(@PathVariable String productName) {
+    public ProductDTO getProductByName(@PathVariable String productName) {
         return productService.getProductByName(productName);
     }
 

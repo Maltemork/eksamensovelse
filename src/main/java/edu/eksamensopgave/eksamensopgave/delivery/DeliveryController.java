@@ -1,10 +1,7 @@
 package edu.eksamensopgave.eksamensopgave.delivery;
 
 import edu.eksamensopgave.eksamensopgave.productOrder.ProductOrder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,15 @@ public class DeliveryController {
     @PutMapping("/{id}")
     public List<ProductOrder> addProductOrdersToDelivery(int id, List<ProductOrder> productOrders) {
         return deliveryService.addProductOrdersToDelivery(id, productOrders);
+    }
+
+    @GetMapping("/{id}")
+    public Delivery getDelivery(@PathVariable int id) {
+        return deliveryService.getDelivery(id);
+    }
+
+    @GetMapping
+    public List<DeliveryDTO> getDeliveries() {
+        return deliveryService.getDeliveries();
     }
 }

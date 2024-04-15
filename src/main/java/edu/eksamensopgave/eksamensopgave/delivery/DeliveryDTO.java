@@ -1,6 +1,10 @@
 package edu.eksamensopgave.eksamensopgave.delivery;
 
-import java.util.Date;
+import edu.eksamensopgave.eksamensopgave.productOrder.ProductOrder;
 
-public record DeliveryDTO(int deliveryId, Date deliveryDate, String deliveryTime, String deliveryAddress) {
+import java.util.Date;
+import java.util.List;
+
+public record DeliveryDTO(int deliveryId, Date deliveryDate, String fromWareHouse, String destination, List<ProductOrder> productOrders) {
+    
 }

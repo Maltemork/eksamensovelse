@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
-    List<Product> findAllByProductName(String name);
+    List<Product> findAllByProductNameIgnoreCase(String name);
+    Product findByProductNameIgnoreCase(String name);
 }
