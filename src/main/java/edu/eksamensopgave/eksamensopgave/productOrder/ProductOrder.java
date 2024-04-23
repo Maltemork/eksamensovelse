@@ -1,10 +1,9 @@
 package edu.eksamensopgave.eksamensopgave.productOrder;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.eksamensopgave.eksamensopgave.delivery.Delivery;
 import edu.eksamensopgave.eksamensopgave.product.Product;
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "productOrders")
@@ -13,6 +12,10 @@ public class ProductOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
     private int quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     @ManyToOne
     private Product product;
@@ -55,5 +58,17 @@ public class ProductOrder {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public int getProductOrderId() {
+        return orderId;
     }
 }

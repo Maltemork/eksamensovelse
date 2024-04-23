@@ -17,6 +17,7 @@ public class Product {
     // Price is rounded down to 2 decimals.
     private BigDecimal price;
 
+    @Column(unique = true)
     private String productName;
 
     //Weight in grams.
@@ -80,5 +81,14 @@ public class Product {
 
     public int getProductId() {
         return productId;
+    }
+
+    public String toString() {
+        return
+                "productId = " + productId +
+                ", price = " + price +
+                ", productName = '" + productName + '\'' +
+                ", weight = " + weight +
+                '}';
     }
 }

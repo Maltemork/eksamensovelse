@@ -5,6 +5,6 @@ import edu.eksamensopgave.eksamensopgave.productOrder.ProductOrder;
 import java.util.Date;
 import java.util.List;
 
-public record DeliveryDTO(int deliveryId, Date deliveryDate, String fromWareHouse, String destination, List<ProductOrder> productOrders) {
+public record DeliveryDTO(Integer deliveryId, Date deliveryDate, String fromWarehouse, String destination, List<ProductOrder> productOrders) {
     
 }

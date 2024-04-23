@@ -10,6 +10,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class InitializeTestCases implements ApplicationRunner {
     private ProductRepository productRepository;
@@ -18,30 +20,30 @@ public class InitializeTestCases implements ApplicationRunner {
 
 
     private void createTestCases() {
-        // Create products
-        productRepository.save(new Product("Æbler", 19.95, 200));
-        productRepository.save(new Product("Pærer", 20, 200.80));
-        productRepository.save(new Product("Bananer", 16, 500));
-        productRepository.save(new Product("Øl", 5, 330));
+            // Create and save Products
+        Product product1 = new Product("Product1", new BigDecimal(10), 100);
+        Product product2 = new Product("Product2", new BigDecimal(20), 200);
+        productRepository.save(product1);
+        productRepository.save(product2);
 
-        // Create product orders
-        productOrderRepository.save(new ProductOrder(productRepository.findByProductNameIgnoreCase("Æbler"), 10));
-        productOrderRepository.save(new ProductOrder(productRepository.findByProductNameIgnoreCase("Pærer"), 20));
-        productOrderRepository.save(new ProductOrder(productRepository.findByProductNameIgnoreCase("Øl"), 120));
+            // Create and save ProductOrders
+        ProductOrder productOrder1 = new ProductOrder(product1, 10);
+        ProductOrder productOrder2 = new ProductOrder(product2, 20);
+        productOrderRepository.save(productOrder1);
+        productOrderRepository.save(productOrder2);
 
-        // Create deliveries
-        deliveryRepository.save(new Delivery("2021-05-12", "warehouse1", "MinKøbmand Godthåbsvej"));
-        deliveryRepository.save(new Delivery("2021-05-13", "warehouse2", "MinKøbmand Nørrebro"));
-        deliveryRepository.save(new Delivery("2021-05-14", "warehouse3", "MinKøbmand Frederiksberg"));
+            // Create and save Deliveries
+        Delivery delivery1 = new Delivery("2021-05-12", "warehouse1", "MinKøbmand Godthåbsvej");
+        Delivery delivery2 = new Delivery("2021-05-13", "warehouse2", "MinKøbmand Nørrebro");
+        deliveryRepository.save(delivery1);
+        deliveryRepository.save(delivery2);
 
-        //Add product orders to deliveries
-        Delivery delivery1 = deliveryRepository.findById(1).get();
-        delivery1.addProductOrder(productOrderRepository.findById(1).get());
-        delivery1.addProductOrder(productOrderRepository.findById(2).get());
+            // Add ProductOrders to Deliveries
+        delivery1.addProductOrder(productOrder1);
+        delivery1.addProductOrder(productOrder2);
         deliveryRepository.save(delivery1);
 
-        Delivery delivery2 = deliveryRepository.findById(2).get();
-        delivery2.addProductOrder(productOrderRepository.findById(3).get());
+        delivery2.addProductOrder(productOrder2);
         deliveryRepository.save(delivery2);
     }
     @Override
